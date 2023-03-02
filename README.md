@@ -1,4 +1,4 @@
-# Tugas Pemrograman DDP2 2022/2023
+# Tugas Pemrograman DDP2 2022/2023 Emmanuel Patrick
 
 CSGE601021 Dasar-Dasar Pemrograman 2 @ Fakultas Ilmu Komputer Universitas Indonesia,
 Semester Genap 2022/2023
