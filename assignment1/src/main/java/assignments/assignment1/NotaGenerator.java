@@ -46,40 +46,31 @@ public class NotaGenerator {
                 String paket = input.nextLine();
                 while ((!paket.equalsIgnoreCase("express")) && (!paket.equalsIgnoreCase("fast") && (!paket.equalsIgnoreCase("reguler")))) {
                     if (paket.equals("?")) {
-                        System.out.println("+-------------Paket-------------+\n" +
-                                "| Express | 1 Hari | 12000 / Kg |\n" +
-                                "| Fast    | 2 Hari | 10000 / Kg |\n" +
-                                "| Reguler | 3 Hari |  7000 / Kg |\n" +
-                                "+-------------------------------+");
-                        System.out.println("Masukkan paket laundry:");
-                        paket = input.nextLine();
+                        showPaket();
                     } else {
                         System.out.println("Paket " + paket + " tidak diketahui\n" +
                                 "[ketik ? untuk mencari tahu jenis paket]");
-                        System.out.println("Masukkan paket laundry:");
-                        paket = input.nextLine();
                     }
+                    System.out.println("Masukkan paket laundry:");
+                    paket = input.nextLine();
                 }
                 int berat;
                 System.out.println("Masukkan berat cucian Anda [Kg]: ");
                 while (true) {
                     try {
                         berat = input.nextInt();
-                        if (berat >= 2) {
-                            break;
-                        }
-                        else {
+                        if (berat < 2) {
                             berat = 2;
                             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-                            break;
                         }
+                        break;
                     } catch (InputMismatchException e) {
                         System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                         input.nextLine();
                     }
                 }
                 String id = generateId(nama, nomorHandphone);
-                System.out.println(generateNota(id, paket, berat, tanggalTerima));
+                System.out.println(generateNota(id, paket, berat, tanggalTerima, 1));
             } else if (pilihan.equalsIgnoreCase("0")) {
                 break;
             }
@@ -119,30 +110,21 @@ public class NotaGenerator {
      */
     public static String generateId(String nama, String nomorHP){
         // TODO: Implement generate ID sesuai soal.
-        nama = nama.toUpperCase();
-        //nama = nama.split(" ")[0];
-        int indexSpasi = nama.indexOf(" ");
-        String kataPertama;
-        if (indexSpasi == -1) {
-            kataPertama = nama; // Input hanya punya satu kata
-        } else {
-            kataPertama = nama.substring(0, indexSpasi);
+        String id = "";
+        id += (nama.split(" ")[0] + "-").toUpperCase();
+        id += nomorHP;
+
+        int checksum = 0;
+        for (char c : id.toCharArray()) {
+            if (Character.isDigit(c))
+                checksum += c - '0';
+            else if (Character.isLetter(c))
+                checksum += (c - 'A') + 1;
+            else
+                checksum += 7;
         }
-        int sumString = checksumString(kataPertama, kataPertama.length());
-        int sumInt = 0;
-        for (int i = 0; i < nomorHP.length(); i++){
-            char digit = nomorHP.charAt(i);
-            int value = Character.getNumericValue(digit);
-            sumInt += value;
-        }
-        String baru;
-        if (sumInt < 9){
-            baru = kataPertama + "-" + nomorHP + "-" + "0" + (sumString + sumInt + 7);
-        }
-        else{
-            baru = kataPertama + "-" + nomorHP + "-" + (sumString + sumInt + 7);
-        }
-        return baru;
+        id += String.format("-%02d", checksum % 100);
+        return id;
     }
 
     /**
@@ -159,7 +141,7 @@ public class NotaGenerator {
      *         <p>Tanggal Selesai : [tanggalTerima + LamaHariPaket]
      */
 
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima) {
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima, int bonus) {
         // TODO: Implement generate nota sesuai soal.
         int hargaPaketPerKg = 0;
         int LamaHariPaket = 0;
@@ -180,25 +162,39 @@ public class NotaGenerator {
                     DateTimeFormatter.ofPattern("dd/MM/yyyy");
             date = LocalDate.parse(tanggalTerima, formatter);
             tanggalSelesai = date.plusDays(LamaHariPaket).format(formatter);
-            System.out.printf("%s%n", date);
         } catch (DateTimeParseException exc) {
-            System.out.printf("%s is not parsable!%n", input);
-            throw exc;      // Rethrow the exception.
+            System.out.println("Format tanggal tidak valid.");
+            throw exc;// Rethrow the exception.
         }
-        int totalHarga = berat * hargaPaketPerKg;
-        return "ID    : " + id + "\n" +
-                "Paket : " + paket + "\n" +
-                "Harga :\n" +
-                berat + " kg x " + hargaPaketPerKg + " = " + totalHarga + "\n" +
-                "Tanggal Terima  : " + tanggalTerima + "\n" +
-                "Tanggal Selesai : " + tanggalSelesai;
+        int totalHarga;
+        if (bonus % 3 == 0) {
+            totalHarga = (berat * hargaPaketPerKg) / 2;
+            return "ID    : " + id + "\n" +
+                    "Paket : " + paket + "\n" +
+                    "Harga :\n" +
+                    berat + " kg x " + hargaPaketPerKg + " = " + (totalHarga * 2) + " = " + totalHarga + " (Discount member 50%!!!)" + "\n" +
+                    "Tanggal Terima  : " + tanggalTerima + "\n" +
+                    "Tanggal Selesai : " + tanggalSelesai;
+        }
+        else {
+            totalHarga = berat * hargaPaketPerKg;
+            return "ID    : " + id + "\n" +
+                    "Paket : " + paket + "\n" +
+                    "Harga :\n" +
+                    berat + " kg x " + hargaPaketPerKg + " = " + totalHarga + "\n" +
+                    "Tanggal Terima  : " + tanggalTerima + "\n" +
+                    "Tanggal Selesai : " + tanggalSelesai;
+        }
     }
     public static int checksumString(String namaTemp, int n) { // rekursi checksum
         if (n == 0) {
             return 0;
         }
-        else {
+        else if(Character.isLetter(namaTemp.charAt(n - 1))){
             return ((namaTemp.charAt(n - 1) - 'A' + 1) + checksumString(namaTemp, (n - 1)));
+        }
+        else{
+            return (7 + checksumString(namaTemp, (n-1)));
         }
     }
 }

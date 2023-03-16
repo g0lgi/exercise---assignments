@@ -141,10 +141,8 @@ public class NotaGeneratorTest {
                     DateTimeFormatter.ofPattern("dd/MM/yyyy");
             date = LocalDate.parse(tanggalTerima, formatter);
             tanggalSelesai = date.plusDays(LamaHariPaket).format(formatter);
-            System.out.printf("%s%n", date);
         } catch (DateTimeParseException exc) {
-            System.out.printf("%s is not parsable!%n", input);
-            throw exc;      // Rethrow the exception.
+            return "Tanggal terima tidak valid";
         }
         int totalHarga = berat * hargaPaketPerKg;
         return "ID    : " + id + "\n" +
