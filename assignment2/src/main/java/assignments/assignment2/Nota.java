@@ -5,13 +5,13 @@ import assignments.assignment1.NotaGenerator;
 public class Nota {
     // TODO: tambahkan attributes yang diperlukan untuk class ini
     private static int counter;
-    int idNota;
-String paket;
-Member member;
-int berat;
-String tanggalMasuk;
-int sisaHariPengerjaan;
-boolean isReady;
+    private int idNota;
+private String paket;
+private Member member;
+private int berat;
+private String tanggalMasuk;
+private int sisaHariPengerjaan;
+private boolean isReady;
 
     public Nota(Member Member, String Paket, int Berat, String TanggalMasuk) {
         // TODO: buat constructor untuk class ini
@@ -19,7 +19,7 @@ boolean isReady;
         paket = Paket;
         berat = Berat;
         tanggalMasuk = TanggalMasuk;
-        if (Paket.equalsIgnoreCase("express")){
+        if (Paket.equalsIgnoreCase("express")){ //supaya hari pengerjaan sesuai paket
             sisaHariPengerjaan = 1;
         }
         else if (Paket.equalsIgnoreCase("fast")) {

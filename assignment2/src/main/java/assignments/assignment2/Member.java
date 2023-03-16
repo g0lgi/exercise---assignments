@@ -4,10 +4,10 @@ import assignments.assignment1.NotaGenerator;
 
 public class Member {
     // TODO: tambahkan attributes yang diperlukan untuk class ini
-String nama;
-String noHp;
-String id;
-int bonusCounter;
+private String nama;
+private String noHp;
+private String id;
+private int bonusCounter;
     public Member(String Nama, String NoHp) {
         // TODO: buat constructor untuk class ini
         nama = Nama;

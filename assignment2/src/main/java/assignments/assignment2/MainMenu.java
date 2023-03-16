@@ -45,13 +45,13 @@ public class MainMenu {
         String inputNama = input.nextLine();
         System.out.println("Masukkan nomor handphone Anda:");
         String nomorHandphone = input.nextLine();
-        while (! nomorHandphone.matches("[0-9]+")){
+        while (! nomorHandphone.matches("[0-9]+")){ //memastikan nomor hp hanya digit
             System.out.println("Nomor hp hanya menerima digit");
             nomorHandphone = input.nextLine();
         }
         Member baru = new Member(inputNama, nomorHandphone);
         boolean udahAda = false;
-        for (Member member : memberList) {
+        for (Member member : memberList) { //check apa member sudah ada
             if (member.getId().equals(baru.getId())) {
                 udahAda = true;
                 break;
@@ -73,7 +73,7 @@ public class MainMenu {
         String inputID = input.nextLine();
         boolean idCheck = false;
         Member user;
-        for (Member member : memberList) {
+        for (Member member : memberList) { //cek apa member ada di list
             if (inputID.equals(member.getId())) {
                 user = member;
                 System.out.println("Masukkan paket laundry: ");
@@ -96,7 +96,7 @@ public class MainMenu {
                 System.out.println("Masukan berat cucian Anda [Kg]:");
                 int berat;
                 while (true) {
-                    try {
+                    try { //memastikan berat bilangan positif
                         berat = input.nextInt();
                         if (berat < 2) {
                             berat = 2;
@@ -110,7 +110,7 @@ public class MainMenu {
                 }
                 String formatter = fmt.format(cal.getTime());
                 Nota baru = new Nota(user, paket, berat, formatter);
-                notaList = Arrays.copyOf(notaList, notaList.length + 1);
+                notaList = Arrays.copyOf(notaList, notaList.length + 1); //bikin notalist baru
                 notaList[notaList.length - 1] = baru;
                 baru.getMember().updateCounter();
                 System.out.println("Berhasil menambahkan nota!");
@@ -129,14 +129,14 @@ public class MainMenu {
     private static void handleListNota() {
         // TODO: handle list semua nota pada sistem
         System.out.println("Terdaftar " + notaList.length + " nota dalam sistem");
-        for (Nota nota : notaList) {
+        for (Nota nota : notaList) { //loop through tiap nota di list dan print nota tersebut
             System.out.println("- " + "[" + nota.getIdNota() + "] Status\t" + " : " + nota.status());
         }
     }
 
     private static void handleListUser() {
         // TODO: handle list semua user pada sistem
-        if (memberList.length > 0) {
+        if (memberList.length > 0) {//cek apa udah ada member di list
             System.out.println("Terdaftar " + memberList.length + " member dalam sistem");
             for (Member member : memberList) {
                 System.out.println("- " + member.getId() + " : " + member.getNama());
@@ -150,7 +150,7 @@ public class MainMenu {
         // TODO: handle ambil cucian
         System.out.println("Masukan ID nota yang akan diambil:");
         int inputID;
-        while (true) {
+        while (true) { //memastikan input integer
             try {
                 inputID = input.nextInt();
                 break;
@@ -159,28 +159,28 @@ public class MainMenu {
                 //input.nextLine();
             }
         }
-        int index = -1;
-        for (int i = 0; i < notaList.length; i++){
+        int index = -1; //index list mulai dari 0, jadi biar aman
+        for (int i = 0; i < notaList.length; i++){ //cari apa id nota sudah ada di list
             if (notaList[i].getIdNota() == inputID){
                 index = i;
                 break;
             }
         }
-        if (index >= 0) {
-            if (notaList.length > 1 && notaList[index].isIsReady()) {
+        if (index >= 0) {// kalo index >= 0, berarti nota ada
+            if (notaList.length > 1 && notaList[index].isIsReady()) {//buat kalo udah ada nota di dalam list dan udah ready
                 System.out.println("Nota dengan ID " + notaList[index].getIdNota() + " berhasil diambil!");
                 for (int j = index; j < (notaList.length - 1); j++) {
                     notaList[j] = notaList[j + 1];
                 }
                 notaList = Arrays.copyOf(notaList, notaList.length - 1);
-            } else if (notaList.length == 1 && notaList[index].isIsReady()) {
+            } else if (notaList.length == 1 && notaList[index].isIsReady()) {//buat kalo cuma ada nota di dalam list dan udah ready
                 System.out.println("Nota dengan ID " + notaList[index].getIdNota() + " berhasil diambil!");
                 notaList = Arrays.copyOf(notaList, notaList.length - 1);
-            } else if (notaList.length >= 1 && !notaList[index].isIsReady()) {
+            } else if (notaList.length >= 1 && !notaList[index].isIsReady()) {//buat kalo udah ada nota di dalam list dan belum ready
                 System.out.println("Nota dengan ID " + notaList[index].getIdNota() + " gagal diambil!");
             }
         }
-        else{
+        else{ //buat kalo nota gada di dalem list
             System.out.println("Nota dengan ID " + inputID + " tidak ditemukan!");
         }
     }
@@ -188,8 +188,8 @@ public class MainMenu {
     private static void handleNextDay() {
         // TODO: handle ganti hari
         System.out.println("Dek Depe tidur hari ini... zzz...");
-        cal.add(Calendar.DATE, 1);
-        for (Nota nota : notaList) {
+        cal.add(Calendar.DATE, 1); //ganti hari di calendar
+        for (Nota nota : notaList) {//update sisahari tiap nota
             nota.updateSisaHari();
             if (nota.isIsReady()) {
                 System.out.println("Laundry dengan nota ID " + nota.getIdNota() + " sudah dapat diambil!");
