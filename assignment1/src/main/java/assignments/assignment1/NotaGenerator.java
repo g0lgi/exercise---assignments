@@ -111,7 +111,7 @@ public class NotaGenerator {
     public static String generateId(String nama, String nomorHP){
         // TODO: Implement generate ID sesuai soal.
         String id = "";
-        id += (nama.split(" ")[0] + "-").toUpperCase();
+        id += (nama.split(" ",2)[0] + "-").toUpperCase();
         id += nomorHP;
 
         int checksum = 0;
