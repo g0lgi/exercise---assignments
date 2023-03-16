@@ -3,7 +3,6 @@ package assignments.assignment1;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 import java.time.LocalDate;
 
@@ -184,17 +183,6 @@ public class NotaGenerator {
                     berat + " kg x " + hargaPaketPerKg + " = " + totalHarga + "\n" +
                     "Tanggal Terima  : " + tanggalTerima + "\n" +
                     "Tanggal Selesai : " + tanggalSelesai;
-        }
-    }
-    public static int checksumString(String namaTemp, int n) { // rekursi checksum
-        if (n == 0) {
-            return 0;
-        }
-        else if(Character.isLetter(namaTemp.charAt(n - 1))){
-            return ((namaTemp.charAt(n - 1) - 'A' + 1) + checksumString(namaTemp, (n - 1)));
-        }
-        else{
-            return (7 + checksumString(namaTemp, (n-1)));
         }
     }
 }
