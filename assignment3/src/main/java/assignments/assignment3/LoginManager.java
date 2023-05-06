@@ -41,6 +41,24 @@ public class LoginManager {
      */
     public Member register(String nama, String noHp, String password) {
         // TODO
+        String id = "";
+        id += (nama.split(" ")[0] + "-").toUpperCase();
+        id += noHp;
+        int checksum = 0;
+        for (char c : id.toCharArray()) {
+            if (Character.isDigit(c))
+                checksum += c - '0';
+            else if (Character.isLetter(c))
+                checksum += (c - 'A') + 1;
+            else
+                checksum += 7;
+        }
+        id += String.format("-%02d", checksum % 100);
+        Member member = new Member(nama, id, password);
+        if (getSystem(id) == null){
+            memberSystem.addMember(member);
+            return member;
+        }
         return null;
     }
 }

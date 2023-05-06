@@ -1,22 +1,30 @@
 package assignments.assignment3.nota.service;
 
 public class SetrikaService implements LaundryService{
+    private boolean done;
     @Override
     public String doWork() {
         // TODO
-        return "";
+        this.done = true;
+        return "Sedang menyetrika...";
     }
 
     @Override
     public boolean isDone() {
         // TODO
-        return false;
+        if (this.done){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
     public long getHarga(int berat) {
         // TODO
-        return 0;
+        int harga = berat * 1000;
+        return harga;
     }
 
     @Override

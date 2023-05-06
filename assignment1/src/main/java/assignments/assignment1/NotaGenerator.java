@@ -112,7 +112,6 @@ public class NotaGenerator {
         String id = "";
         id += (nama.split(" ",2)[0] + "-").toUpperCase();
         id += nomorHP;
-
         int checksum = 0;
         for (char c : id.toCharArray()) {
             if (Character.isDigit(c))

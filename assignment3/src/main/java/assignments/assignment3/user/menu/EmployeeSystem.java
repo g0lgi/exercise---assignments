@@ -4,6 +4,9 @@ import assignments.assignment3.nota.Nota;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static assignments.assignment3.nota.NotaManager.notaList;
 
 public class EmployeeSystem extends SystemCLI {
@@ -12,12 +15,13 @@ public class EmployeeSystem extends SystemCLI {
      * Membuat object baru EmployeeSystem dan mendaftarkan Employee pada CuciCuci
      */
     public EmployeeSystem() {
-        memberList = new Member[]{
+        ArrayList <Employee> employees = new ArrayList<>(Arrays.asList(
                 new Employee("Dek Depe", "akuDDP"),
                 new Employee("Depram", "musiktualembut"),
                 new Employee("Lita Duo", "gitCommitPush"),
-                new Employee("Ivan Hoshimachi", "SuamiSahSuisei"),
-        };
+                new Employee("Ivan Hoshimachi", "SuamiSahSuisei")
+        ));
+        this.memberList.addAll(employees);
     }
 
     /**
@@ -30,6 +34,17 @@ public class EmployeeSystem extends SystemCLI {
     protected boolean processChoice(int choice) {
         boolean logout = false;
         // TODO:
+        if (choice == 3){logout = true;}
+        else if (choice == 1){
+            for (Nota nota: notaList){
+                System.out.println("Nota " + nota.getIdNota() + " : " + nota.kerjakan());
+            }
+        }
+        else if (choice == 2){
+            for (Nota nota: notaList){
+                System.out.println("Nota " + nota.getIdNota() + " : " + nota.getNotaStatus());
+            }
+        }
         return logout;
     }
 
