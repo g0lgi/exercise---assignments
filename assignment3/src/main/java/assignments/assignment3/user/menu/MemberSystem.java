@@ -20,7 +20,7 @@ public class MemberSystem extends SystemCLI {
         boolean logout = false;
         // TODO
         if (choice == 3){logout = true;}
-        else if (choice == 1) {
+        else if (choice == 1) {//bikin nota
             System.out.println("Masukan paket laundry:");
             System.out.println("+-------------Paket-------------+");
             System.out.println("| Express | 1 Hari | 12000 / Kg |");
@@ -56,7 +56,7 @@ public class MemberSystem extends SystemCLI {
             }
             System.out.println("Nota berhasil dibuat!");
         }
-        else if (choice == 2){
+        else if (choice == 2){//print tiap nota
             for (Nota nota : loginMember.getNotaList()){
                 System.out.println("[ID Nota = " + nota.getIdNota() + "]");
                 System.out.println(nota.toString());

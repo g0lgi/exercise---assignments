@@ -25,7 +25,7 @@ public class Nota {
     public Nota(Member member, int berat, String paket, String tanggal) {
         //TODO
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(); //tanggal masuk jadi calendar
         this.idNota = totalNota;
         this.member = member;
         this.paket = paket;
@@ -35,21 +35,17 @@ public class Nota {
         if (paket.equals("express")) {
             this.sisaHariPengerjaan = 1;
             this.baseHarga = 12000;
-            cal.add(Calendar.DATE, sisaHariPengerjaan);
-            tanggalSelesai = formatter.format(cal.getTime());
         }
         else if (paket.equals("fast")) {
             this.sisaHariPengerjaan = 2;
             this.baseHarga = 10000;
-            cal.add(Calendar.DATE, sisaHariPengerjaan);
-            tanggalSelesai = formatter.format(cal.getTime());
         }
         else if (paket.equals("reguler")) {
             this.sisaHariPengerjaan = 3;
             this.baseHarga = 7000;
-            cal.add(Calendar.DATE, sisaHariPengerjaan);
-            tanggalSelesai = formatter.format(cal.getTime());
         }
+        cal.add(Calendar.DATE, sisaHariPengerjaan); //tanggal selesai = tanggalmasuk + sisahari
+        tanggalSelesai = formatter.format(cal.getTime());
         services.add(new CuciService());
         totalNota++;
         NotaManager.addNota(this);
@@ -63,10 +59,10 @@ public class Nota {
     public String kerjakan(){
         // TODO
         serviceCounter += 1;
-        if (serviceCounter == services.size()){
+        if (serviceCounter == services.size()){ //jika sama berarti satu arraylist sudah kena semua servicenya
             this.isDone = true;
         }
-        if (serviceCounter <= services.size()){
+        if (serviceCounter <= services.size()){//selama masih lebih kecil kerjakan
             return services.get(serviceCounter - 1).doWork();
         }
 
@@ -81,7 +77,7 @@ public class Nota {
             isDone = true;
         }*/
         if (isDone){
-            sisaHariPengerjaan++;
+            sisaHariPengerjaan++; //supaya ga minus jika nota sudah beres
         }
         return isDone;
     }
@@ -92,8 +88,11 @@ public class Nota {
         for (LaundryService service : services){
             harga += service.getHarga(this.berat);
         }
-        if (sisaHariPengerjaan < 0){
+        if (sisaHariPengerjaan < 0){//implementasi pengurangan harga
             harga += sisaHariPengerjaan * 2000;
+        }
+        if (harga < 0){ //harga tidak boleh minus
+            harga = 0;
         }
         return harga;
     }
@@ -119,7 +118,7 @@ public class Nota {
         cal.set(year, month, date);*/
 
         String nota = "";
-        nota += "ID    : " + idNota + "\n";
+        nota += "ID    : " + this.member.getId() + "\n";
         nota += "Paket : " + paket + "\n";
         nota += "Harga :\n";
         nota += String.format("%d kg x %d = %d", berat, this.baseHarga, (berat * this.baseHarga));

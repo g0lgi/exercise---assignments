@@ -35,12 +35,12 @@ public class EmployeeSystem extends SystemCLI {
         boolean logout = false;
         // TODO:
         if (choice == 3){logout = true;}
-        else if (choice == 1){
+        else if (choice == 1){//kerjakan tiap nota
             for (Nota nota: notaList){
                 System.out.println("Nota " + nota.getIdNota() + " : " + nota.kerjakan());
             }
         }
-        else if (choice == 2){
+        else if (choice == 2){//lihat status tiap nota
             for (Nota nota: notaList){
                 System.out.println("Nota " + nota.getIdNota() + " : " + nota.getNotaStatus());
             }
