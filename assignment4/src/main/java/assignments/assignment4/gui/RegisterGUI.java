@@ -126,6 +126,14 @@ public class RegisterGUI extends JPanel {
         String nama = nameTextField.getText();
         String password = passwordField.getText();
 
+        if (nama.isBlank() || password.isBlank()){
+            JOptionPane.showMessageDialog(null, "Semua field wajib di isi!");
+            nameTextField.setText("");
+            phoneTextField.setText("");
+            passwordField.setText("");
+            return;
+        }
+
         try {
             Integer.parseInt(phoneTextField.getText());
         }
