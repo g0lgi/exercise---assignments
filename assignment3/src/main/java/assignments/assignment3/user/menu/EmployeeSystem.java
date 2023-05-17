@@ -21,7 +21,7 @@ public class EmployeeSystem extends SystemCLI {
                 new Employee("Lita Duo", "gitCommitPush"),
                 new Employee("Ivan Hoshimachi", "SuamiSahSuisei")
         ));
-        this.memberList.addAll(employees);
+        memberList.addAll(employees);
     }
 
     /**

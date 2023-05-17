@@ -61,4 +61,8 @@ public class Member {
     public ArrayList<Nota> getNotaList() {
         return notaList;
     }
+
+    public String getPassword() {
+        return password;
+    }
 }
