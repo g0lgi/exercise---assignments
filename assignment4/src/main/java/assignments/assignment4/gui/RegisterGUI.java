@@ -134,7 +134,7 @@ public class RegisterGUI extends JPanel {
         try {
             Integer.parseInt(phoneTextField.getText());
         }
-        catch (NumberFormatException e){
+        catch (NumberFormatException e){ //jika nomorhp memiliki character yang bukan angka
             JOptionPane.showMessageDialog(null, "Nomor HP hanya boleh angka!");
             phoneTextField.setText("");
             return;
@@ -142,7 +142,7 @@ public class RegisterGUI extends JPanel {
         String noHp = phoneTextField.getText();
 
         Member registeredMember = loginManager.register(nama, noHp, password);
-        if (registeredMember != null){
+        if (registeredMember != null){//method register aakan mengembalikan null jika member sudah ada
             if(mainFrame.login(registeredMember.getId(), registeredMember.getPassword())){
                 JOptionPane.showMessageDialog(null, "Berhasil membuat user dengan ID " + registeredMember.getId());
             }

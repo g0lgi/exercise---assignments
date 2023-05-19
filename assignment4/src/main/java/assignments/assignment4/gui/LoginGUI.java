@@ -116,7 +116,7 @@ public class LoginGUI extends JPanel {
         if (id.isBlank() || password.isBlank()){
             JOptionPane.showMessageDialog(null, "Semua field harus diisi!");
         }
-        if (mainFrame.login(id,password)){
+        if (mainFrame.login(id,password)){//method login return true jika berhasil login
             idTextField.setText("");
             passwordField.setText("");
         }

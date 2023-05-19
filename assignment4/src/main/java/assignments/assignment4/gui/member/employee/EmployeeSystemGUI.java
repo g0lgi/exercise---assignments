@@ -82,14 +82,5 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         }
         JOptionPane.showMessageDialog(null, allNota);
     }
-    public void addEmployee(ArrayList <Employee> employees) {
-        /*Member[] result = new Member[employees.length + memberList.length];
-
-
-        System.arraycopy(memberList, 0, result, 0, memberList.length);
-        System.arraycopy(employees, 0, result, memberList.length, employees.length);
-
-        memberList = result;*/
-    }
 
 }
